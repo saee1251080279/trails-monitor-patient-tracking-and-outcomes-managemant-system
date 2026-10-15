@@ -9,6 +9,9 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
+        pill: "rounded-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm",
+        soft: "rounded-full bg-card text-primary hover:bg-accent",
+        nav: "nav-button",
         default: "bg-primary text-primary-foreground shadow hover:bg-primary/90",
         destructive: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline:

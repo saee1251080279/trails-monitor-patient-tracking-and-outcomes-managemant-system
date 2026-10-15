@@ -1,0 +1,11 @@
+import { useState,type FormEvent } from 'react';
+import { Quote,UserSearch,UserPlus,ArrowRight,Search } from 'lucide-react';
+import { toast } from 'sonner';
+import { useNavigate } from '@tanstack/react-router';
+import { Button } from '@/components/ui/button';
+import { useWorkspace } from './workspace-context';
+import { PatientForm } from './patient-form';
+export function Enrollment(){const {patients,select,addPatient}=useWorkspace();const [code,setCode]=useState('');const [name,setName]=useState('');const navigate=useNavigate();const [notFound,setNotFound]=useState(false);
+ function find(e:FormEvent){e.preventDefault();const p=patients.find(p=>(!code||p.patient_code===code.trim())&&(!name||p.name.toLowerCase().includes(name.trim().toLowerCase())));if((!code&&!name)||!p){setNotFound(true);toast.error('No matching patient found');return;}setNotFound(false);select(p.id);void navigate({to:'/outcomes'});}
+ return <><div className="quote-card"><div className="quote-icon"><Quote size={27}/></div><blockquote>“Wherever the art of medicine is loved,<br/>there is also a love of humanity.”<cite>— Hippocrates</cite></blockquote></div><section className="form-panel"><div className="panel-heading"><span className="panel-icon"><UserSearch/></span><div><h3>Find a patient</h3><small>Pick up where their care left off.</small></div></div><form onSubmit={find}><div className="form-grid"><div className="field"><label htmlFor="find-id">Patient ID</label><input id="find-id" value={code} onChange={e=>setCode(e.target.value)} placeholder="Enter patient ID"/></div><div className="field"><label htmlFor="find-name">Patient name</label><input id="find-name" value={name} onChange={e=>setName(e.target.value)} placeholder="Enter patient name"/></div></div>{notFound&&<p className="error-state mt-3" role="alert">No matching patient. Check the name or ID.</p>}<div className="form-actions"><small><Search size={12}/> Find by name or unique patient ID.</small><Button variant="pill">Find patient <ArrowRight size={14}/></Button></div></form></section><section className="form-panel"><div className="panel-heading"><span className="panel-icon"><UserPlus/></span><div><h3>Enroll a new patient</h3><small>Great care starts with knowing your patient.</small></div></div><PatientForm onSave={addPatient}/></section></>;
+}
