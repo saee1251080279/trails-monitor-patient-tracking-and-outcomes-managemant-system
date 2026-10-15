@@ -14,7 +14,145 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      appointments: {
+        Row: {
+          datetime: string
+          doctor_id: string
+          id: string
+          note: string
+          patient_id: string
+        }
+        Insert: {
+          datetime: string
+          doctor_id: string
+          id?: string
+          note?: string
+          patient_id: string
+        }
+        Update: {
+          datetime?: string
+          doctor_id?: string
+          id?: string
+          note?: string
+          patient_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "appointments_patient_id_fkey"
+            columns: ["patient_id"]
+            isOneToOne: false
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      patients: {
+        Row: {
+          age: number
+          allergies: string
+          blood_type: string
+          contact: string
+          created_at: string
+          diseases: string
+          doctor_id: string
+          gender: string
+          height_cm: number
+          id: string
+          last_visit: string | null
+          metrics: Json
+          name: string
+          patient_code: string
+          status: string
+          weight_kg: number
+        }
+        Insert: {
+          age: number
+          allergies?: string
+          blood_type?: string
+          contact: string
+          created_at?: string
+          diseases?: string
+          doctor_id: string
+          gender?: string
+          height_cm?: number
+          id?: string
+          last_visit?: string | null
+          metrics?: Json
+          name: string
+          patient_code: string
+          status?: string
+          weight_kg?: number
+        }
+        Update: {
+          age?: number
+          allergies?: string
+          blood_type?: string
+          contact?: string
+          created_at?: string
+          diseases?: string
+          doctor_id?: string
+          gender?: string
+          height_cm?: number
+          id?: string
+          last_visit?: string | null
+          metrics?: Json
+          name?: string
+          patient_code?: string
+          status?: string
+          weight_kg?: number
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          display_name: string
+          id: string
+          photo: string | null
+        }
+        Insert: {
+          display_name?: string
+          id: string
+          photo?: string | null
+        }
+        Update: {
+          display_name?: string
+          id?: string
+          photo?: string | null
+        }
+        Relationships: []
+      }
+      remarks: {
+        Row: {
+          created_at: string
+          doctor_id: string
+          id: string
+          patient_id: string
+          text: string
+        }
+        Insert: {
+          created_at?: string
+          doctor_id: string
+          id?: string
+          patient_id: string
+          text: string
+        }
+        Update: {
+          created_at?: string
+          doctor_id?: string
+          id?: string
+          patient_id?: string
+          text?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "remarks_patient_id_fkey"
+            columns: ["patient_id"]
+            isOneToOne: false
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
